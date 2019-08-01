@@ -71,8 +71,8 @@ function UtilLoader() {
         return util;
     }
 
-    function _loadUtil(utilName, variableName) {
-        var url = _config.baseUrl + utilName + ".js";
+    function _loadUtil(fileName, variableName) {
+        var url = _config.baseUrl + fileName;
         let settings = {
             async: false,
             crossDomain: true,
@@ -80,7 +80,7 @@ function UtilLoader() {
             method: 'GET',
         };
         pm.sendRequest(settings, function (err, res) {
-            pm.test("Loaded " + utilName + " into global variable '" + variableName + "'", () => { 
+            pm.test("Loaded " + fileName + " into global variable '" + variableName + "'", () => { 
                 if (err)
                 {
                     console.error("Failed to download util: " + url);
