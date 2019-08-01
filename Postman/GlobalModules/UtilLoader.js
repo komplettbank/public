@@ -63,10 +63,16 @@ function UtilLoader() {
             _loadUtil(utilName, variableName);
         }
 
+        console.info("1st - Reading util from variable: " + variableName);
         let util = eval(pm.globals.get(variableName));
         if (util === undefined) {
+            console.warn("Util is undefined");
             _loadUtil(utilName, variableName);
+            console.info("2nd - Reading util from variable: " + variableName);
             util = eval(pm.globals.get(variableName));
+            if (util === undefined) {
+                console.warn("Util is STILL undefined");
+            }
         }
         return util;
     }
