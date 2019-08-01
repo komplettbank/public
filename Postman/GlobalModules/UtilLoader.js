@@ -1,10 +1,8 @@
-﻿/* ======================================================= */
+﻿/* ================================================================================== */
 /*
-/*  This utility will help retrieve and store shared utils
-/*  in global Postman variables. The exposed methods will
-/*  return the specified util, downloading it if necessary. 
+/*  This utility will help retrieve and store common, shared utils in global Postman variables. 
 /*
-/* ======================================================= */
+/* ================================================================================== */
 
 function UtilLoader() {
 

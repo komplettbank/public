@@ -1,20 +1,19 @@
 ﻿/* ================================================================================== */
 /*
-/*  Executing this request will update a global variable with a function that returns 
-/*  an object with general utility-functions. The object can be loaded and used in 
-/*  test-scripts, for example like this:
+/*  This function returns an object with some general, core, utility-functions, that 
+/*  can be helpful when writing test scripts in Postman. 
+/* 
+/*  For example, to load the module and test that a request returns 200 OK, and also 
+/*  stop the runner in case the test fails, you could write the following:
 /*
-/*      let util = eval(pm.globals.get("module:util"));
-/*      util.isResponse200();
-/*
-/*  IMPORTANT NOTE:
-/*  ---------------------
-/*  The master for this file is kept in "\KB.Postman\GlobalModules\LoadUtil.js"
-/*  in the "KB.Shared.Testing" git-repo in the "KBShared" project in Azure DevOps.
-/*  Any changes made here must be propagated to the master file!
-/*
-/* ======================================================= */
-
+/*  let loader = eval(pm.globals.get("module:UtilLoader"));
+/*  let util = utilLoader.getCoreUtil();
+/*  if (!util.isResponse200()) {
+/*      util.stopRunner("Unexpected HTTP status");
+/*      return;
+/*  }
+/*   
+/* ================================================================================== */
 
 function CoreUtil() {
 
