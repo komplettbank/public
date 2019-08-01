@@ -10,9 +10,9 @@ function UtilLoader() {
 
     let _config = {
         "baseUrl" : "https://raw.githubusercontent.com/komplettbank/public/master/Postman/GlobalModules/",
-        "globalUtil" : {
-            "filename" : "GlobalUtil.js",
-            "variable" : "module:GlobalUtil"
+        "coreUtil" : {
+            "filename" : "CoreUtil.js",
+            "variable" : "module:CoreUtil"
         },
         "azureBlobUtil" : {
             "filename" : "AzureBlobUtil.js",
@@ -37,7 +37,7 @@ function UtilLoader() {
         ensure that any asynchronus downloading is finished before 
         the request and testscripts are executed.
     */
-    _module.loadGlobalUtil = (forceReload) => { _loadUtil(_config.globalUtil.filename, _config.globalUtil.variable, forceReload); }
+    _module.loadCoreUtil = (forceReload) => { _loadUtil(_config.coreUtil.filename, _config.coreUtil.variable, forceReload); }
     _module.loadAzureBlobUtil = (forceReload) => { _loadUtil(_config.azureBlobUtil.filename, _config.azureBlobUtil.variable, forceReload); }
     _module.loadCosmosDbUtil = (forceReload) => { _loadUtil(_config.cosmosDbUtil.filename, _config.cosmosDbUtil.variable, forceReload); }
     _module.loadDebtRegisterUtil = (forceReload) => { _loadUtil(_config.debtRegisterUtil.filename, _config.debtRegisterUtil.variable, forceReload); }
@@ -48,7 +48,7 @@ function UtilLoader() {
         variables containing the utils. It also enables us to modify the
         variable names later, if we need/want to, without affecting the caller.
     */
-    _module.getGlobalUtil = () => { return eval(pm.globals.get(_config.globalUtil.variable)); }
+    _module.getCoreUtil = () => { return eval(pm.globals.get(_config.coreUtil.variable)); }
     _module.getAzureBlobUtil = () => { return eval(pm.globals.get(_config.azureBlobUtil.variable)); }
     _module.getCosmosDbUtil = () => { return eval(pm.globals.get(_config.cosmosDbUtil.variable)); }
     _module.getDebtRegisterUtil = () => { return eval(pm.globals.get(_config.debtRegisterUtil.variable)); }
