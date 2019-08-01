@@ -58,8 +58,8 @@ function UtilLoader() {
         global variable first.
     */
     function _getOrLoadUtil(utilName, variableName, forceReload) { 
-        let reload = forceReload !== false;
-        if (reload) {
+        forceReload = forceReload === undefined ? false : forceReload;
+        if (forceReload) {
             _loadUtil(utilName, variableName);
         }
 
@@ -73,15 +73,26 @@ function UtilLoader() {
 
     function _loadUtil(utilName, variableName) {
         var url = _config.baseUrl + utilName + ".js";
+        let settings = {
+            async: false,
+            crossDomain: true,
+            url: url,
+            method: 'GET',
+        };
         pm.test("Loaded " + utilName + " into global variable '" + variableName + "'", () => { 
-            pm.sendRequest(url, function (err, res) {
-                pm.expect(err).to.not.be.ok;
-                pm.expect(res).to.have.property('code', 200);
-                pm.expect(res).to.have.property('status', 'OK');
-                
-                pm.globals.set(variableName, res.text());
-                let module = eval(pm.globals.get(variableName));
-                pm.expect(module).to.not.equal(undefined);
+            pm.sendRequest(settings, function (err, res) {
+                if (err)
+                {
+                    console.error("Failed to download util: " + url);
+                    console.error(err);
+                }
+                else{
+                    pm.expect(res).to.have.property('code', 200);
+                    pm.expect(res).to.have.property('status', 'OK');
+                    console.info("Downloaded util: " + url);
+                    pm.globals.set(variableName, res.text());
+                    console.info("Updated variable: " + variableName);
+                }
             });
         });
     }
