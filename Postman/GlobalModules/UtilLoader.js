@@ -32,52 +32,43 @@ function UtilLoader() {
 
     /* ==================== Public methods ================== */
 
-    _module.getGlobalUtil = (forceReload) => { 
-        return _getOrLoadUtil(_config.globalUtil.filename, _config.globalUtil.variable, forceReload);
-    }
+    /*
+        Loading a util should happen in a pre-request script, to
+        ensure that any asynchronus downloading is finished before 
+        the request and testscripts are executed.
+    */
+    _module.loadGlobalUtil = (forceReload) => { _loadUtil(_config.globalUtil.filename, _config.globalUtil.variable, forceReload); }
+    _module.loadAzureBlobUtil = (forceReload) => { _loadUtil(_config.azureBlobUtil.filename, _config.azureBlobUtil.variable, forceReload); }
+    _module.loadCosmosDbUtil = (forceReload) => { _loadUtil(_config.cosmosDbUtil.filename, _config.cosmosDbUtil.variable, forceReload); }
+    _module.loadDebtRegisterUtil = (forceReload) => { _loadUtil(_config.debtRegisterUtil.filename, _config.debtRegisterUtil.variable, forceReload); }
 
-    _module.getDebtRegisterUtil = (forceReload) => { 
-        return _getOrLoadUtil(_config.debtRegisterUtil.filename, _config.debtRegisterUtil.variable, forceReload);
-    }
-
-    _module.getAzureBlobUtil = (forceReload) => { 
-        return _getOrLoadUtil(_config.azureBlobUtil.filename, _config.azureBlobUtil.variable, forceReload);
-    }
-
-    _module.getCosmosDbUtil = (forceReload) => { 
-        return _getOrLoadUtil(_config.cosmosDbUtil.filename, _config.cosmosDbUtil.variable, forceReload);
-    }
+    /*
+        These getters simply retrieves a util from a global variable,
+        so that the usercaller does not need to know the name of the
+        variables containing the utils. It also enables us to modify the
+        variable names later, if we need/want to, without affecting the caller.
+    */
+    _module.getGlobalUtil = () => { return eval(pm.globals.get(_config.globalUtil.variable)); }
+    _module.getAzureBlobUtil = () => { return eval(pm.globals.get(_config.azureBlobUtil.variable)); }
+    _module.getCosmosDbUtil = () => { return eval(pm.globals.get(_config.cosmosDbUtil.variable)); }
+    _module.getDebtRegisterUtil = () => { return eval(pm.globals.get(_config.debtRegisterUtil.variable)); }
 
     /* ==================== Private methods ================== */
 
     /*
-        Returns the specified util stored in the global variable.        
-        The "foreReload" parameter is optional. Default is false, which means the util 
-        will be returned from the global variable, if it exists there. If it doesn't exist,
-        or if "foreReload" is true, then it will be downloaded and stored in the 
-        global variable first.
+        Ensures that a util is loaded into a variable. If it does not
+        already exist in the variable, or if "forceReload" is true, it
+        will be downloaded first.
     */
-    function _getOrLoadUtil(utilName, variableName, forceReload) { 
+    function _loadUtil(fileName, variableName, forceReload) { 
         forceReload = forceReload === undefined ? false : forceReload;
-        if (forceReload) {
-            _loadUtil(utilName, variableName);
-        }
-
-        console.info("1st - Reading util from variable: " + variableName);
         let util = eval(pm.globals.get(variableName));
-        if (util === undefined) {
-            console.warn("Util is undefined");
-            _loadUtil(utilName, variableName);
-            console.info("2nd - Reading util from variable: " + variableName);
-            util = eval(pm.globals.get(variableName));
-            if (util === undefined) {
-                console.warn("Util is STILL undefined");
-            }
+        if (forceReload || util === undefined) {
+            _downloadUtilAndUpdateVariable(fileName, variableName);
         }
-        return util;
     }
 
-    function _loadUtil(fileName, variableName) {
+    function _downloadUtilAndUpdateVariable(fileName, variableName) {
         var url = _config.baseUrl + fileName;
         let settings = {
             async: false,
@@ -85,6 +76,7 @@ function UtilLoader() {
             url: url,
             method: 'GET',
         };
+        console.info("Loading starting...");
         pm.sendRequest(settings, function (err, res) {
             pm.test("Loaded " + fileName + " into global variable '" + variableName + "'", () => { 
                 if (err)
@@ -100,6 +92,7 @@ function UtilLoader() {
                 pm.globals.set(variableName, res.text());
                 console.info("Updated variable: " + variableName);
             });
+            console.info("Loading finished!");
         });
     }
 
