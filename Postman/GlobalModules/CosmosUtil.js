@@ -16,7 +16,7 @@
 /* ======================================================= */
 
 
-postman.setGlobalVariable("module:cosmosUtil", function loadCosmosUtil() {
+function CosmosUtil() {
 
     let _logVerbose = false;  // verbose logging OFF by default
     let _cosmosUtil = {};
@@ -171,13 +171,4 @@ postman.setGlobalVariable("module:cosmosUtil", function loadCosmosUtil() {
 
 
     return _cosmosUtil;
-} + '; loadCosmosUtil();');
-
-/*
- * Try to load the module using eval, and test the result, to assert that it 
- * actually can be loaded inside a test-script in Postman.
- */
-let cosmosUtil = eval(pm.globals.get("module:cosmosUtil"));
-pm.test("Global cosmosUtil loaded successfully", () => {
-    pm.expect(cosmosUtil).to.not.equal(undefined);
-});
+}; CosmosUtil();

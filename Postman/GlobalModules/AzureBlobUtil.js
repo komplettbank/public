@@ -20,7 +20,7 @@
 /* ======================================================= */
 
 
-postman.setGlobalVariable("module:azureBlobUtil", function loadAzureBlobUtil() {
+function AzureBlobUtil() {
 
     let _logVerbose = true;  // verbose logging OFF by default
     let _azureBlobUtil = {};
@@ -2937,13 +2937,4 @@ postman.setGlobalVariable("module:azureBlobUtil", function loadAzureBlobUtil() {
 
 
     return _azureBlobUtil;
-} + '; loadAzureBlobUtil();');
-
-/*
- * Try to load the module using eval, and test the result, to assert that it 
- * actually can be loaded inside a test-script in Postman.
- */
-let azureBlobUtil = eval(pm.globals.get("module:azureBlobUtil"));
-pm.test("Global azureBlobUtil loaded successfully", () => {
-    pm.expect(azureBlobUtil).to.not.equal(undefined);
-});
+}; AzureBlobUtil();

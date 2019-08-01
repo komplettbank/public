@@ -16,7 +16,7 @@
 /* ======================================================= */
 
 
-postman.setGlobalVariable("module:util", function loadUtil() {
+function CoreUtil() {
 
     let _util = {};
 
@@ -129,13 +129,4 @@ postman.setGlobalVariable("module:util", function loadUtil() {
     }
 
     return _util;
-} + '; loadUtil();');
-
-/*
- * Try to load the module using eval, and test the result, to assert that it 
- * actually can be loaded inside a test-script in Postman.
- */
-let util = eval(pm.globals.get("module:util"));
-pm.test("Global util loaded successfully", () => {
-    pm.expect(util).to.not.equal(undefined);
-});
+}; CoreUtil();

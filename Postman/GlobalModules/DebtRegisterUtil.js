@@ -1,11 +1,4 @@
-﻿/* ================================================================================== */
-/*
-/* Testing 123
-/*
-/* ======================================================= */
-
-
-function DebtRegisterUtil() {
+﻿function DebtRegisterUtil() {
 
     let _module = {};
 
@@ -16,11 +9,11 @@ function DebtRegisterUtil() {
     /* ======================================================= */
 
     _module.echo = (o) => { 
-        pm.test("Echo '" + o + "'", function () {
+        pm.test("Echoing '" + o + "'", function () {
             pm.expect(true).to.be.true;
         });
-        console.info("Hello + " + o);
+        console.info("Hello " + o);
     };
 
     return _module;
-}
+}; DebtRegisterUtil();
