@@ -79,21 +79,20 @@ function UtilLoader() {
             url: url,
             method: 'GET',
         };
-        pm.test("Loaded " + utilName + " into global variable '" + variableName + "'", (done) => { 
-            pm.sendRequest(settings, function (err, res) {
+        pm.sendRequest(settings, function (err, res) {
+            pm.test("Loaded " + utilName + " into global variable '" + variableName + "'", () => { 
                 if (err)
                 {
                     console.error("Failed to download util: " + url);
                     console.error(err);
                 }
-                else{
-                    pm.expect(res).to.have.property('code', 200);
-                    pm.expect(res).to.have.property('status', 'OK');
-                    console.info("Downloaded util: " + url);
-                    pm.globals.set(variableName, res.text());
-                    console.info("Updated variable: " + variableName);
-                    done();
-                }
+
+                pm.expect(err).to.not.be.ok;
+                pm.expect(res).to.have.property('code', 200);
+                pm.expect(res).to.have.property('status', 'OK');
+                console.info("Downloaded util: " + url);
+                pm.globals.set(variableName, res.text());
+                console.info("Updated variable: " + variableName);
             });
         });
     }
