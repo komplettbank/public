@@ -1,0 +1,1 @@
+Repository with global utils, which can be used in Postman.
