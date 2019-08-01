@@ -79,7 +79,7 @@ function UtilLoader() {
             url: url,
             method: 'GET',
         };
-        pm.test("Loaded " + utilName + " into global variable '" + variableName + "'", () => { 
+        pm.test("Loaded " + utilName + " into global variable '" + variableName + "'", (done) => { 
             pm.sendRequest(settings, function (err, res) {
                 if (err)
                 {
@@ -92,6 +92,7 @@ function UtilLoader() {
                     console.info("Downloaded util: " + url);
                     pm.globals.set(variableName, res.text());
                     console.info("Updated variable: " + variableName);
+                    done();
                 }
             });
         });
