@@ -49,10 +49,10 @@ function UtilLoader() {
     _module.loadDebtRegisterUtil = (forceDownload) => { _loadUtil(_config.debtRegisterUtil.filename, _config.debtRegisterUtil.variable, forceDownload); }
 
     _module.loadAll = (forceDownload) => { 
-        loadCoreUtil(forceDownload); 
-        loadAzureBlobUtil(forceDownload); 
-        loadCosmosDbUtil(forceDownload); 
-        loadDebtRegisterUtil(forceDownload); 
+        this.loadCoreUtil(forceDownload); 
+        this.loadAzureBlobUtil(forceDownload); 
+        this.loadCosmosDbUtil(forceDownload); 
+        this.loadDebtRegisterUtil(forceDownload); 
     }
 
     /* ==================== Private methods ================== */
