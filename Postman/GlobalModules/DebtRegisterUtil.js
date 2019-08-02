@@ -10,7 +10,7 @@
 
 function DebtRegisterUtil() {
 
-    let _logVerbose = false;
+    let _logVerbose = true;
     let _module = {};
 
     /* ==================== Public methods ================== */

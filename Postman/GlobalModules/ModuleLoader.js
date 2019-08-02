@@ -28,6 +28,10 @@ function ModuleLoader() {
             "filename" : "CosmosDbUtil.js",
             "variable" : "module:CosmosDbUtil"
         },
+        "jobAssistant" : {
+            "filename" : "JobAssistant.js",
+            "variable" : "module:JobAssistant"
+        },
         "debtRegisterUtil" : {
             "filename" : "DebtRegisterUtil.js",
             "variable" : "module:DebtRegisterUtil"
@@ -46,12 +50,14 @@ function ModuleLoader() {
     _module.loadCoreUtil = (forceDownload) => { _loadUtil(_config.coreUtil.filename, _config.coreUtil.variable, forceDownload); }
     _module.loadAzureBlobUtil = (forceDownload) => { _loadUtil(_config.azureBlobUtil.filename, _config.azureBlobUtil.variable, forceDownload); }
     _module.loadCosmosDbUtil = (forceDownload) => { _loadUtil(_config.cosmosDbUtil.filename, _config.cosmosDbUtil.variable, forceDownload); }
+    _module.loadJobAssistant = (forceDownload) => { _loadUtil(_config.jobAssistant.filename, _config.jobAssistant.variable, forceDownload); }
     _module.loadDebtRegisterUtil = (forceDownload) => { _loadUtil(_config.debtRegisterUtil.filename, _config.debtRegisterUtil.variable, forceDownload); }
 
     _module.loadAll = (forceDownload) => { 
         _module.loadCoreUtil(forceDownload); 
         _module.loadAzureBlobUtil(forceDownload); 
         _module.loadCosmosDbUtil(forceDownload); 
+        _module.loadJobAssistant(forceDownload); 
         _module.loadDebtRegisterUtil(forceDownload); 
     }
 
