@@ -3,16 +3,16 @@
 /*  This utility will helpdownload and store modules in Postman as global variables, for
 /*  example like this (if the Postman request does a GET to download this util):
 /*  
-/*  pm.test("GlobalModulesLoader downloaded and used to load all other modules", () => { 
+/*  pm.test("The ModuleLoader was downloaded and used to load all modules into global variables", () => { 
 /*  pm.response.to.have.status(200);
 /*     let loader = eval(pm.response.text());
 /*     pm.expect(loader).to.not.equal(undefined);
-/*     loader.loadAll();
+/*     loader.loadAll(true);
 /*  });
 
 /* ================================================================================== */
 
-function UtilLoader() {
+function ModuleLoader() {
 
     let _config = {
         "baseUrl" : "https://raw.githubusercontent.com/komplettbank/public/master/Postman/GlobalModules/",
@@ -80,7 +80,7 @@ function UtilLoader() {
         };
         console.info("Loading starting...");
         pm.sendRequest(settings, function (err, res) {
-            pm.test("Loaded " + fileName + " into global variable '" + variableName + "'", () => { 
+            pm.test(fileName + " was loaded into the global variable '" + variableName + "'", () => { 
                 if (err)
                 {
                     console.error("Failed to download util: " + url);
@@ -99,4 +99,4 @@ function UtilLoader() {
     }
 
     return _module;
-}; UtilLoader();
+}; ModuleLoader();
