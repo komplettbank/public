@@ -1,7 +1,15 @@
 ﻿/* ================================================================================== */
 /*
-/*  This utility will help retrieve and store common, shared utils in global Postman variables. 
-/*
+/*  This utility will helpdownload and store modules in Postman as global variables, for
+/*  example like this (if the Postman request does a GET to download this util):
+/*  
+/*  pm.test("GlobalModulesLoader downloaded and used to load all other modules", () => { 
+/*  pm.response.to.have.status(200);
+/*     let loader = eval(pm.response.text());
+/*     pm.expect(loader).to.not.equal(undefined);
+/*     loader.loadAll();
+/*  });
+
 /* ================================================================================== */
 
 function UtilLoader() {
@@ -31,37 +39,33 @@ function UtilLoader() {
     /* ==================== Public methods ================== */
 
     /*
-        Loading a util should happen in a pre-request script, to
-        ensure that any asynchronus downloading is finished before 
-        the request and testscripts are executed.
+        Loading a util should happen in a separate request, or as 
+        a pre-request script, to ensure that any asynchronus downloading 
+        is finished before testscripts are executed.
     */
-    _module.loadCoreUtil = (forceReload) => { _loadUtil(_config.coreUtil.filename, _config.coreUtil.variable, forceReload); }
-    _module.loadAzureBlobUtil = (forceReload) => { _loadUtil(_config.azureBlobUtil.filename, _config.azureBlobUtil.variable, forceReload); }
-    _module.loadCosmosDbUtil = (forceReload) => { _loadUtil(_config.cosmosDbUtil.filename, _config.cosmosDbUtil.variable, forceReload); }
-    _module.loadDebtRegisterUtil = (forceReload) => { _loadUtil(_config.debtRegisterUtil.filename, _config.debtRegisterUtil.variable, forceReload); }
+    _module.loadCoreUtil = (forceDownload) => { _loadUtil(_config.coreUtil.filename, _config.coreUtil.variable, forceDownload); }
+    _module.loadAzureBlobUtil = (forceDownload) => { _loadUtil(_config.azureBlobUtil.filename, _config.azureBlobUtil.variable, forceDownload); }
+    _module.loadCosmosDbUtil = (forceDownload) => { _loadUtil(_config.cosmosDbUtil.filename, _config.cosmosDbUtil.variable, forceDownload); }
+    _module.loadDebtRegisterUtil = (forceDownload) => { _loadUtil(_config.debtRegisterUtil.filename, _config.debtRegisterUtil.variable, forceDownload); }
 
-    /*
-        These getters simply retrieves a util from a global variable,
-        so that the usercaller does not need to know the name of the
-        variables containing the utils. It also enables us to modify the
-        variable names later, if we need/want to, without affecting the caller.
-    */
-    _module.getCoreUtil = () => { return eval(pm.globals.get(_config.coreUtil.variable)); }
-    _module.getAzureBlobUtil = () => { return eval(pm.globals.get(_config.azureBlobUtil.variable)); }
-    _module.getCosmosDbUtil = () => { return eval(pm.globals.get(_config.cosmosDbUtil.variable)); }
-    _module.getDebtRegisterUtil = () => { return eval(pm.globals.get(_config.debtRegisterUtil.variable)); }
+    _module.loadAll = (forceDownload) => { 
+        loadCoreUtil(forceDownload); 
+        loadAzureBlobUtil(forceDownload); 
+        loadCosmosDbUtil(forceDownload); 
+        loadDebtRegisterUtil(forceDownload); 
+    }
 
     /* ==================== Private methods ================== */
 
     /*
         Ensures that a util is loaded into a variable. If it does not
-        already exist in the variable, or if "forceReload" is true, it
+        already exist in the variable, or if "forceDownload" is true, it
         will be downloaded first.
     */
-    function _loadUtil(fileName, variableName, forceReload) { 
-        forceReload = forceReload === undefined ? false : forceReload;
+    function _loadUtil(fileName, variableName, forceDownload) { 
+        forceDownload = forceDownload === undefined ? false : forceDownload;
         let util = eval(pm.globals.get(variableName));
-        if (forceReload || util === undefined) {
+        if (forceDownload || util === undefined) {
             _downloadUtilAndUpdateVariable(fileName, variableName);
         }
     }

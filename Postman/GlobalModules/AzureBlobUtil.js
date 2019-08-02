@@ -1,35 +1,23 @@
 ﻿/* ================================================================================== */
 /*
-/*  Executing this request will update a global variable with a function that returns 
-/*  an object with Azure Storage utility-functions. The object can be loaded and used in 
-/*  test-scripts, for example like this:
+/*  Utility for working with Azure Storage. The object can be loaded and used in test-
+/*  scripts, for example like this:
 /*
-/*      let azureBlobUtil = eval(pm.globals.get("module:azureBlobUtil"));
+/*      let azureBlobUtil = eval(pm.globals.get("module:AzureBlobUtil"));
 /*      let authDetails = azureBlobUtil.getAuthDetails(
 /*          postman.getEnvironmentVariable("blob.accountName"),
 /*          postman.getEnvironmentVariable("blob.accountKey"),
 /*          postman.getEnvironmentVariable("blob.containerName")
 /*      );
 /*
-/*  IMPORTANT NOTE:
-/*  ---------------------
-/*  The master for this file is kept in "\KB.Postman\GlobalModules\LoadAzureBlobUtil.js" 
-/*  in the "KB.Shared.Testing" git-repo in the "KBShared" project in Azure DevOps.
-/*  Any changes made here must be propagated to the master file!
-/*
-/* ======================================================= */
-
+/* ================================================================================== */
 
 function AzureBlobUtil() {
 
-    let _logVerbose = true;  // verbose logging OFF by default
-    let _azureBlobUtil = {};
+    let _logVerbose = false;
+    let _module = {};
 
-    /* ======================================================= */
-    /*
-    /*                      Public methods
-    /*
-    /* ======================================================= */
+    /* ==================== Public methods ================== */
 
     /*
         Creates the necessary properties to authenticate with the Azure Storage Rest API. 
@@ -54,7 +42,7 @@ function AzureBlobUtil() {
 
         Doc on SAS querystring params in URL's: https://docs.microsoft.com/en-us/azure/storage/common/storage-dotnet-shared-access-signature-part-1#examples-of-sas-uris
     */
-    _azureBlobUtil.getAuthDetails = (accountName, accountKey, containerName, argOptions) => {
+    _module.getAuthDetails = (accountName, accountKey, containerName, argOptions) => {
 
         if (!accountName) {
             console.error("Missing value for required parameter 'accountName'");
@@ -2923,11 +2911,7 @@ function AzureBlobUtil() {
     let _HeaderConstants = _Constants.HeaderConstants;
     let _QueryStringConstants = _Constants.QueryStringConstants;
 
-    /* ======================================================= */
-    /*
-    /*                 Private helper methods
-    /*
-    /* ======================================================= */
+    /* ==================== Private methods ================== */
 
     function _log(message) {
         if (_logVerbose) {
@@ -2936,5 +2920,5 @@ function AzureBlobUtil() {
     }
 
 
-    return _azureBlobUtil;
+    return _module;
 }; AzureBlobUtil();

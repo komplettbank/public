@@ -1,13 +1,10 @@
 ﻿/* ================================================================================== */
 /*
-/*  This function returns an object with some general, core, utility-functions, that 
-/*  can be helpful when writing test scripts in Postman. 
-/* 
-/*  For example, to load the module and test that a request returns 200 OK, and also 
-/*  stop the runner in case the test fails, you could write the following:
+/*  Utility with general functions that may  be helpful when writing test scripts in 
+/*  Postman. For example, to load the module and test that a request returns 200 OK,
+/*  and also stop the runner in case the test fails, you could write the following:
 /*
-/*  let loader = eval(pm.globals.get("module:UtilLoader"));
-/*  let util = utilLoader.getCoreUtil();
+/*  let util = eval(pm.globals.get("module:CoreUtil"));
 /*  if (!util.isResponse200()) {
 /*      util.stopRunner("Unexpected HTTP status");
 /*      return;
@@ -17,34 +14,30 @@
 
 function CoreUtil() {
 
-    let _util = {};
+    let _module = {};
 
-    /* ======================================================= */
-    /*
-    /*                      Public methods
-    /*
-    /* ======================================================= */
+    /* ==================== Public methods ================== */
 
     /*
         Returns true for an empty object, or null, or undefined, or nothing specified at all, or any number.
         Returns true for an actual object, or for a string.
     */
-    _util.isEmpty = (o) => { return _isEmpty(o); };
+    _module.isEmpty = (o) => { return _isEmpty(o); };
 
     /*
         Returns true if iteration data has been specified (an input file to a runner). 
         This can be used to determine if fallback values should be used (when no iteration data exists)
     */
-    _util.hasIterationData = () => { return !_isEmpty(pm.iterationData.toObject()); };
+    _module.hasIterationData = () => { return !_isEmpty(pm.iterationData.toObject()); };
 
     /* 
         Use the following functions to add a test that verifies the responsecode, 
         and get the test-result as a boolean.
     */
-    _util.isResponse200 = () => { return _verifyResponseStatusCode(200); };
-    _util.isResponse400 = () => { return _verifyResponseStatusCode(400); };
-    _util.isResponse404 = () => { return _verifyResponseStatusCode(404); };
-    _util.isResponse = (expectedCode) => { return _verifyResponseStatusCode(expectedCode); };
+    _module.isResponse200 = () => { return _verifyResponseStatusCode(200); };
+    _module.isResponse400 = () => { return _verifyResponseStatusCode(400); };
+    _module.isResponse404 = () => { return _verifyResponseStatusCode(404); };
+    _module.isResponse = (expectedCode) => { return _verifyResponseStatusCode(expectedCode); };
 
     /*
         Adds a test that verifies that the content-type header is correct, and that the 
@@ -57,7 +50,7 @@ function CoreUtil() {
         the Cosmos DB API will only return "application/json", and so we need to be able
         to override the default expected value.
     */
-    _util.isResponseJson = (expectedContentType) => {
+    _module.isResponseJson = (expectedContentType) => {
         expectedContentType = expectedContentType || "application/json; charset=utf-8";
         if (_verifyResponseContentType(expectedContentType)) {
             try {
@@ -77,7 +70,7 @@ function CoreUtil() {
         Adds a test that verifies that the content-type header is correct, and that the 
         response size (content-length header or the actual response body) is greater than 0.
     */
-    _util.isResponsePdf = () => {
+    _module.isResponsePdf = () => {
         if (_verifyResponseContentType("application/pdf")) {
             let size = pm.response.size().body; // The doc says size() returns a number, but the log tells me it's an object. Doc: http://www.postmanlabs.com/postman-collection/Response.html
             pm.test("Content length > 0", () => { pm.expect(size).to.be.above(0); });
@@ -89,16 +82,12 @@ function CoreUtil() {
     /*
         Stops the runner (Newman or the Postman Collection Runner), and logs the reason.
     */
-    _util.stopRunner = (reason) => {
+    _module.stopRunner = (reason) => {
         console.warn("Stopping runner. Reason: " + reason);
         postman.setNextRequest(null);
     };
 
-    /* ======================================================= */
-    /*
-    /*                 Private helper methods
-    /*
-    /* ======================================================= */
+    /* ==================== Private methods ================== */
 
     /* 
         Test for a response status code, but also return the result of that test as a boolean, to enable
@@ -127,5 +116,5 @@ function CoreUtil() {
         return true;
     }
 
-    return _util;
+    return _module;
 }; CoreUtil();

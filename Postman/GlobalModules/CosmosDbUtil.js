@@ -1,31 +1,19 @@
 ﻿/* ================================================================================== */
 /*
-/*  Executing this request will update a global variable with a function that returns 
-/*  an object with Cosmos DB utility-functions. The object can be loaded and used in 
-/*  test-scripts, for example like this:
+/*  Utility for working with Cosmos DB. The object can be loaded and used in test-
+/*  scripts, for example like this:
 /*
-/*      let cosmosUtil = eval(pm.globals.get("module:cosmosUtil"));
+/*      let cosmosUtil = eval(pm.globals.get("module:CosmosDbUtil"));
 /*      let authDetails = cosmosUtil.getAuthDetails(request.url, postman.getEnvironmentVariable("cosmos.masterKey"));
 /*
-/*  IMPORTANT NOTE:
-/*  ---------------------
-/*  The master for this file is kept in "\KB.Postman\GlobalModules\LoadCosmosUtil.js"
-/*  in the "KB.Shared.Testing" git-repo in the "KBShared" project in Azure DevOps.
-/*  Any changes made here must be propagated to the master file!
-/*
-/* ======================================================= */
+/* ================================================================================== */
 
+function CosmosDbUtil() {
 
-function CosmosUtil() {
+    let _logVerbose = false;
+    let _module = {};
 
-    let _logVerbose = false;  // verbose logging OFF by default
-    let _cosmosUtil = {};
-
-    /* ======================================================= */
-    /*
-    /*                      Public methods
-    /*
-    /* ======================================================= */
+    /* ==================== Public methods ================== */
 
     /*
         Creates an auth-token than can be used in the Authorization header to authenticate with the CosmosDb Rest API,
@@ -43,7 +31,7 @@ function CosmosUtil() {
             verbose     = Whether to log verbosely. Default is false.
 
     */
-    _cosmosUtil.getAuthDetails = (url, mastKey, verbose) => {
+    _module.getAuthDetails = (url, mastKey, verbose) => {
 
         if (!url) {
             console.error("Missing value for required parameter 'url'");
@@ -157,11 +145,7 @@ function CosmosUtil() {
         return authDetails;
     };
 
-    /* ======================================================= */
-    /*
-    /*                 Private helper methods
-    /*
-    /* ======================================================= */
+    /* ==================== Private methods ================== */
 
     function _log(message) {
         if (_logVerbose) {
@@ -169,6 +153,5 @@ function CosmosUtil() {
         }
     }
 
-
-    return _cosmosUtil;
-}; CosmosUtil();
+    return _module;
+}; CosmosDbUtil();
