@@ -1,6 +1,10 @@
 ﻿/* ================================================================================== */
 /*
-/*  Utility with functions specific to testing the Debt Register API.
+/*  Utility with functions specific to testing the Debt Register API. You can use it
+/*  to verify customers and accounts, for example like this:
+/*
+/*  let debtregUtil = eval(pm.globals.get("module:DebtRegisterUtil"));
+/*  debtregUtil.echo("The sun is shining");
 /*
 /* ================================================================================== */
 
@@ -16,7 +20,7 @@ function DebtRegisterUtil() {
             pm.expect(true).to.be.true;
         });
 
-        _log("Hello " + o);
+        _log("Hello! You wrote: " + o);
     };
 
     /* ==================== Private methods ================== */
