@@ -4,7 +4,7 @@
 /*  to verify customers and accounts, for example like this:
 /*
 /*  let debtregUtil = eval(pm.globals.get("module:DebtRegisterUtil"));
-/*  debtregUtil.echo("The sun is shining");
+/*  debtregUtil.verifyCustomerDebt(...);
 /*
 /* ================================================================================== */
 
@@ -13,11 +13,11 @@ function DebtRegisterUtil() {
 	let _module = {};
 	
 	let _constants = {
-		creditFacility: "creditFacility",
-		repaymentLoan: "repaymentLoan",
-		chargePeriodMonthly: "MONTHLY",
-		cardAccountName: "Credit Card",
-		loanAccountName: "Credit Loan"
+		"creditFacility": "creditFacility",
+		"repaymentLoan": "repaymentLoan",
+		"chargePeriodMonthly": "MONTHLY",
+		"cardAccountName": "Credit Card",
+		"loanAccountName": "Credit Loan"
 	};
 
 	/* ==================== Public methods ================== */
