@@ -47,35 +47,25 @@ function ModuleLoader() {
         a pre-request script, to ensure that any asynchronus downloading 
         is finished before testscripts are executed.
     */
-    _module.loadCoreUtil = (forceDownload) => { _loadUtil(_config.coreUtil.filename, _config.coreUtil.variable, forceDownload); }
-    _module.loadAzureBlobUtil = (forceDownload) => { _loadUtil(_config.azureBlobUtil.filename, _config.azureBlobUtil.variable, forceDownload); }
-    _module.loadCosmosDbUtil = (forceDownload) => { _loadUtil(_config.cosmosDbUtil.filename, _config.cosmosDbUtil.variable, forceDownload); }
-    _module.loadJobAssistant = (forceDownload) => { _loadUtil(_config.jobAssistant.filename, _config.jobAssistant.variable, forceDownload); }
-    _module.loadDebtRegisterUtil = (forceDownload) => { _loadUtil(_config.debtRegisterUtil.filename, _config.debtRegisterUtil.variable, forceDownload); }
+    _module.loadCoreUtil = () => { _downloadUtilAndUpdateVariable(_config.coreUtil.filename, _config.coreUtil.variable); }
+    _module.loadAzureBlobUtil = () => { _downloadUtilAndUpdateVariable(_config.azureBlobUtil.filename, _config.azureBlobUtil.variable); }
+    _module.loadCosmosDbUtil = () => { _downloadUtilAndUpdateVariable(_config.cosmosDbUtil.filename, _config.cosmosDbUtil.variable); }
+    _module.loadJobAssistant = () => { _downloadUtilAndUpdateVariable(_config.jobAssistant.filename, _config.jobAssistant.variable); }
+    _module.loadDebtRegisterUtil = () => { _downloadUtilAndUpdateVariable(_config.debtRegisterUtil.filename, _config.debtRegisterUtil.variable); }
 
-    _module.loadAll = (forceDownload) => { 
-        _module.loadCoreUtil(forceDownload); 
-        _module.loadAzureBlobUtil(forceDownload); 
-        _module.loadCosmosDbUtil(forceDownload); 
-        _module.loadJobAssistant(forceDownload); 
-        _module.loadDebtRegisterUtil(forceDownload); 
+    _module.loadAll = () => { 
+        _module.loadCoreUtil(); 
+        _module.loadAzureBlobUtil(); 
+        _module.loadCosmosDbUtil(); 
+        _module.loadJobAssistant(); 
+        _module.loadDebtRegisterUtil(); 
     }
 
     /* ==================== Private methods ================== */
 
     /*
-        Ensures that a util is loaded into a variable. If it does not
-        already exist in the variable, or if "forceDownload" is true, it
-        will be downloaded first.
+        Downloads a util and places it in a Postman variable.
     */
-    function _loadUtil(fileName, variableName, forceDownload) { 
-        forceDownload = forceDownload === undefined ? false : forceDownload;
-        let util = eval(pm.globals.get(variableName));
-        if (forceDownload || util === undefined) {
-            _downloadUtilAndUpdateVariable(fileName, variableName);
-        }
-    }
-
     function _downloadUtilAndUpdateVariable(fileName, variableName) {
         var url = _config.baseUrl + fileName;
         let settings = {
