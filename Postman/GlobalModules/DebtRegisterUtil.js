@@ -10,15 +10,15 @@
 
 function DebtRegisterUtil() {
 
-    let _module = {};
-    
-    let _constants = {
-        creditFacility: "creditFacility",
-        repaymentLoan: "repaymentLoan",
-        chargePeriodMonthly: "MONTHLY",
-        cardAccountName: "Credit Card",
-        loanAccountName: "Credit Loan",
-    }
+	let _module = {};
+	
+	let _constants = {
+		creditFacility: "creditFacility",
+		repaymentLoan: "repaymentLoan",
+		chargePeriodMonthly: "MONTHLY",
+		cardAccountName: "Credit Card",
+		loanAccountName: "Credit Loan",
+	}
 
 	/* ==================== Public methods ================== */
 
@@ -88,25 +88,25 @@ function DebtRegisterUtil() {
 			} 
 		});
 	}
-    
+	
 	function _verifyCoBorrower(account, gpid) {
 
-        pm.test("CoBorrower logic is correct", () => {
-            if (account.globalCosignerCustomerId === undefined || account.globalCosignerCustomerId === null) {
-                pm.expect(loan.coBorrower).to.equal(0);
-            }
-            else if (gpid == account.globalCosignerCustomerId ) { 
-                pm.expect(loan.coBorrower).to.equal(1);
-            }   
-            else if (gpid == account.globalCustomerId ) {
-                pm.expect(loan.coBorrower).to.equal(2);
-            }
-            else {
-                pm.expect(gpid).to.be.oneOf(account.globalCosignerCustomerId, account.globalCustomerId);
-            }
-        });
+		pm.test("CoBorrower logic is correct", () => {
+			if (account.globalCosignerCustomerId === undefined || account.globalCosignerCustomerId === null) {
+				pm.expect(loan.coBorrower).to.equal(0);
+			}
+			else if (gpid == account.globalCosignerCustomerId ) { 
+				pm.expect(loan.coBorrower).to.equal(1);
+			}   
+			else if (gpid == account.globalCustomerId ) {
+				pm.expect(loan.coBorrower).to.equal(2);
+			}
+			else {
+				pm.expect(gpid).to.be.oneOf(account.globalCosignerCustomerId, account.globalCustomerId);
+			}
+		});
 	}    
-    
+	
 	/*
 	   Ensure the balance is positive, and multiply by 100 to get rid of decimal point
 	*/
@@ -119,7 +119,7 @@ function DebtRegisterUtil() {
 	*/
 	function _multiplyBy100(decimalNumber) {
 		return decimalNumber * 100;
-    }
+	}
 
 	return _module;
 }; DebtRegisterUtil();
