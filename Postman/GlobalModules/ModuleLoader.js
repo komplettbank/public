@@ -77,7 +77,7 @@ function ModuleLoader() {
     }
 
     function _downloadUtilAndUpdateVariable(fileName, variableName) {
-        var url = _config.baseUrl + fileName;
+        var url = _config.baseUrl + fileName + "?" + new Date().getMilliseconds(); // Adding querystring to make URL unique and try to avoid getting a cached version
         let settings = {
             async: false,
             crossDomain: true,
