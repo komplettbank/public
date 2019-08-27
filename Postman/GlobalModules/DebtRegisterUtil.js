@@ -27,9 +27,16 @@ function DebtRegisterUtil() {
 	*/
 	_module.verifyCustomerDebt = (customer, gpid, account1, account2) => {  
 		customer.loans.each(function(loan) {
-			pm.test("The loan type should be creditFacility or repaymentLoan", () => { pm.expect(loan.type).to.be.oneOf(_constants.creditFacility, _constants.repaymentLoan); });
-			pm.test("The accountId used in a loan matches the kid of an account", () => { pm.expect(loan.accountID).to.be.oneOf(account1.kid, account2.kid); });
-
+			pm.test("The loan type should be creditFacility or repaymentLoan", () => { pm.expect(loan.type).to.be.oneOf([_constants.creditFacility, _constants.repaymentLoan]); });
+			pm.test("The accountId used in a loan matches the kid of an account", () => { 
+				if (account2 === undefined)	{
+					pm.expect(loan.accountID).to.equal(account1.kid);
+				}
+				else {
+					pm.expect(loan.accountID).to.be.oneOf([account1.kid, account2.kid]); 
+				}
+			});
+				
 			if (loan.type === _constants.creditFacility) { 
 				if (loan.accountID === account1.kid) {
 					_verifyCreditFacilityProperties(loan, account1, gpid);
