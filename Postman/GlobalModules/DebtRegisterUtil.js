@@ -13,6 +13,8 @@ function DebtRegisterUtil() {
     let _logVerbose = true;
     let _module = {};
 
+	/* hello */
+
     /* ==================== Public methods ================== */
 
     _module.echo = (o) => { 
