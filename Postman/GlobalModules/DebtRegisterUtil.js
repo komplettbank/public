@@ -17,8 +17,8 @@ function DebtRegisterUtil() {
 		repaymentLoan: "repaymentLoan",
 		chargePeriodMonthly: "MONTHLY",
 		cardAccountName: "Credit Card",
-		loanAccountName: "Credit Loan",
-	}
+		loanAccountName: "Credit Loan"
+	};
 
 	/* ==================== Public methods ================== */
 
