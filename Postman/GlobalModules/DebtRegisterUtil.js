@@ -13,11 +13,11 @@ function DebtRegisterUtil() {
 	let _module = {};
 	
 	let _constants = {
-		"creditFacility": "creditFacility",
-		"repaymentLoan": "repaymentLoan",
-		"chargePeriodMonthly": "MONTHLY",
-		"cardAccountName": "Credit Card",
-		"loanAccountName": "Credit Loan"
+		creditFacility: "creditFacility",
+		repaymentLoan: "repaymentLoan",
+		chargePeriodMonthly: "MONTHLY",
+		cardAccountName: "Credit Card",
+		loanAccountName: "Credit Loan"
 	};
 
 	/* ==================== Public methods ================== */
@@ -25,11 +25,11 @@ function DebtRegisterUtil() {
 	/*
 	   Verify customer debt (Customer having maximum two loan accounts)
 	*/
-	_util.verifyCustomerDebt = (customer, gpid, account1, account2)  => {  
+	_module.verifyCustomerDebt = (customer, gpid, account1, account2) => {  
 		customer.loans.each(function(loan) {
 			pm.test("The loan type should be creditFacility or repaymentLoan", () => { pm.expect(loan.type).to.be.oneOf(_constants.creditFacility, _constants.repaymentLoan); });
 			pm.test("The accountId used in a loan matches the kid of an account", () => { pm.expect(loan.accountID).to.be.oneOf(account1.kid, account2.kid); });
-		 
+
 			if (loan.type === _constants.creditFacility) { 
 				if (loan.accountID === account1.kid) {
 					_verifyCreditFacilityProperties(loan, account1, gpid);
@@ -69,7 +69,7 @@ function DebtRegisterUtil() {
 	
 	function _verifyCreditFacilityProperties(loan, account, gpid) {
 		
-		 pm.test("CreditFacility has correct values for KID: " + loan.accountID, function () { 
+		pm.test("CreditFacility has correct values for KID: " + loan.accountID, function () { 
 			pm.expect(loan.type).to.equal(_constants.creditFacility);
 			pm.expect(loan.accountID).to.equal(account.kid);
 			pm.expect(loan.creditLimit).to.equal(_ensurePositiveOrZero(account.creditLimit));
@@ -80,7 +80,7 @@ function DebtRegisterUtil() {
 			pm.expect(loan.installmentChargePeriod).to.equal(_constants.chargePeriodMonthly);
 			_verifyCoBorrower(account, gpid);
 
-			if (account.productType == 'CC') { 
+			if (account.productType === 'CC') { 
 				pm.expect(loan.accountName).to.equal(_constants.cardAccountName);
 			}
 			else {
@@ -95,10 +95,10 @@ function DebtRegisterUtil() {
 			if (account.globalCosignerCustomerId === undefined || account.globalCosignerCustomerId === null) {
 				pm.expect(loan.coBorrower).to.equal(0);
 			}
-			else if (gpid == account.globalCosignerCustomerId ) { 
+			else if (gpid === account.globalCosignerCustomerId ) { 
 				pm.expect(loan.coBorrower).to.equal(1);
 			}   
-			else if (gpid == account.globalCustomerId ) {
+			else if (gpid === account.globalCustomerId ) {
 				pm.expect(loan.coBorrower).to.equal(2);
 			}
 			else {
@@ -110,10 +110,10 @@ function DebtRegisterUtil() {
 	/*
 	   Ensure the balance is positive, and multiply by 100 to get rid of decimal point
 	*/
-	 function _ensurePositiveOrZero(balance) {
+	function _ensurePositiveOrZero(balance) {
 		return balance >= 0 ? 0 : Math.floor(-(_multiplyBy100(balance)));
-	   }
-	   
+	}
+   
 	/*
 		Return decimal number multiplied by 100, so that for example 10.20 is returned as 1020.
 	*/

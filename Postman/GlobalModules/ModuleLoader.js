@@ -77,12 +77,12 @@ function ModuleLoader() {
     }
 
     function _downloadUtilAndUpdateVariable(fileName, variableName) {
-        var url = _config.baseUrl + fileName + "?" + new Date().getMilliseconds(); // Adding querystring to make URL unique and try to avoid getting a cached version
+        var url = _config.baseUrl + fileName;
         let settings = {
             async: false,
             crossDomain: true,
             url: url,
-            method: 'GET',
+            method: 'GET'
         };
         console.info("Loading starting...");
         pm.sendRequest(settings, function (err, res) {
