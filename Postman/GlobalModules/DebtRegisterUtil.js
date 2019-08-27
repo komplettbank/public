@@ -33,7 +33,7 @@ function DebtRegisterUtil() {
 				pm.expect(loan.accountID).to.equal(account1.kid);
 			}
 			else {
-				pm.expect(loan.accountID).to.be.oneOf(account1.kid, account2.kid); 
+				pm.expect(loan.accountID).to.be.oneOf([account1.kid, account2.kid]); 
 			}
 			});
 				
