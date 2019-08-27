@@ -1,13 +1,13 @@
 ﻿/* ================================================================================== */
 /*
-/*  This utility will helpdownload and store modules in Postman as global variables, for
+/*  This utility will help download and store modules in Postman as global variables, for
 /*  example like this (if the Postman request does a GET to download this util):
 /*  
 /*  pm.test("The ModuleLoader was downloaded and used to load all modules into global variables", () => { 
-/*  pm.response.to.have.status(200);
-/*     let loader = eval(pm.response.text());
-/*     pm.expect(loader).to.not.equal(undefined);
-/*     loader.loadAll(true);
+/*    pm.response.to.have.status(200);
+/*    let loader = eval(pm.response.text());
+/*    pm.expect(loader).to.not.equal(undefined);
+/*    loader.loadAll();
 /*  });
 
 /* ================================================================================== */
