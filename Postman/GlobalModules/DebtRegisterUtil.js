@@ -13,11 +13,11 @@ function DebtRegisterUtil() {
     let _module = {};
     
     let _constants = {
-        creditFacility = "creditFacility",
-        repaymentLoan = "repaymentLoan",
-        chargePeriodMonthly = "MONTHLY",
-        cardAccountName = "Credit Card",
-        loanAccountName = "Credit Loan",
+        creditFacility: "creditFacility",
+        repaymentLoan: "repaymentLoan",
+        chargePeriodMonthly: "MONTHLY",
+        cardAccountName: "Credit Card",
+        loanAccountName: "Credit Loan",
     }
 
 	/* ==================== Public methods ================== */
