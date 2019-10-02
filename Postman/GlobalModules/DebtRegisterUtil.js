@@ -70,7 +70,7 @@ function DebtRegisterUtil() {
 			pm.expect(loan.installmentCharges).to.equal(_multiplyBy100(account.installmentCharges));
 			pm.expect(loan.installmentChargePeriod).to.equal(_constants.chargePeriodMonthly);
 			pm.expect(loan.accountName).to.equal(_constants.loanAccountName);
-			_verifyCoBorrower(account, gpid);
+			_verifyCoBorrower(loan, account, gpid);
 		});
 	}    
 	
@@ -85,7 +85,7 @@ function DebtRegisterUtil() {
 			pm.expect(loan.nominalInterestRate).to.equal(_multiplyBy100(account.interestRate));
 			pm.expect(loan.installmentCharges).to.equal(_multiplyBy100(account.installmentCharges));
 			pm.expect(loan.installmentChargePeriod).to.equal(_constants.chargePeriodMonthly);
-			_verifyCoBorrower(account, gpid);
+			_verifyCoBorrower(loan, account, gpid);
 
 			if (account.productType === 'CC') { 
 				pm.expect(loan.accountName).to.equal(_constants.cardAccountName);
@@ -96,7 +96,7 @@ function DebtRegisterUtil() {
 		});
 	}
 	
-	function _verifyCoBorrower(account, gpid) {
+	function _verifyCoBorrower(loan, account, gpid) {
 
 		pm.test("CoBorrower logic is correct", () => {
 			if (account.globalCosignerCustomerId === undefined || account.globalCosignerCustomerId === null) {
