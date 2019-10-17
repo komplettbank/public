@@ -25,8 +25,8 @@ function DebtRegisterUtil() {
 	/*
 	   Verify customer debt (Customer having maximum two loan accounts)
 	*/
-	_module.verifyCustomerDebt = (customer, gpid, account1, account2) => {  
-		customer.loans.each(function(loan) {
+	_module.verifyCustomerDebt = (loan, gpid, account1, account2) => {  
+		loan.each(function(loan) {
 			pm.test("The loan type should be creditFacility or repaymentLoan", () => { pm.expect(loan.type).to.be.oneOf([_constants.creditFacility, _constants.repaymentLoan]); });
 			pm.test("The accountId used in a loan matches the kid of an account", () => { 
 				if (account2 === undefined)	{
