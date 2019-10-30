@@ -97,15 +97,14 @@ function CoreUtil() {
         conditional execution of requests, based on the return value
     */
     function _verifyResponseStatusCodesIsAnyOf(...expectedStatusCodes) {
-        // console.log("length=" + expectedStatusCodes.length);
         var isOk = expectedStatusCodes.some(statuscode => {
-            // console.log(`expected=${statuscode}`);
-            // console.log(`actual=${pm.response.code}`);
+            // console.log(`expected=${statuscode}, actual=${pm.response.code}`);
             return pm.response.code === statuscode;
         });
         pm.test("Status code is one of " + expectedStatusCodes.join(", "), () => { 
             pm.expect(isOk).to.equal(true);
         });
+        return isOk;
     }
 
     function _verifyResponseStatusCode(expectedStatusCode) {
