@@ -40,7 +40,7 @@ function CoreUtil() {
     _module.isResponse400 = () => { return _verifyResponseStatusCode(400); };
     _module.isResponse404 = () => { return _verifyResponseStatusCode(404); };
     _module.isResponse = (expectedCode) => { return _verifyResponseStatusCode(expectedCode); };
-    _module.isResponseAnyOf = (...expectedCodes) => { return _verifyResponseStatusCodesIsAnyOf(...expectedCodes); };
+    _module.isResponseCodeAnyOf = (...expectedCodes) => { return _verifyResponseStatusCodesIsAnyOf(...expectedCodes); };
 
     /*
         Adds a test that verifies that the content-type header is correct, and that the 
