@@ -1,4 +1,4 @@
-﻿/* ================================================================================== */
+/* ================================================================================== */
 /*
 /*  Utility with general functions that may  be helpful when writing test scripts in 
 /*  Postman. For example, to load the module and test that a request returns 200 OK,
@@ -36,10 +36,10 @@ function CoreUtil() {
     */
     _module.isResponse200 = () => { return _verifyResponseStatusCode(200); };
     _module.isResponse201 = () => { return _verifyResponseStatusCode(201); };
-    _module.isResponse204 = () => { return _verifyResponseStatusCode(204); };
     _module.isResponse400 = () => { return _verifyResponseStatusCode(400); };
     _module.isResponse404 = () => { return _verifyResponseStatusCode(404); };
     _module.isResponse = (expectedCode) => { return _verifyResponseStatusCode(expectedCode); };
+    _module.isResponseAnyOf = (...expectedCodes) => { return _verifyResponseStatusCodesIsAnyOf(...expectedCodes); };
 
     /*
         Adds a test that verifies that the content-type header is correct, and that the 
@@ -95,9 +95,21 @@ function CoreUtil() {
         Test for a response status code, but also return the result of that test as a boolean, to enable
         conditional execution of requests, based on the return value
     */
+    function _verifyResponseStatusCodesIsAnyOf(...expectedStatusCodes) {
+        console.log("length=" + expectedStatusCodes.length);
+        var isOk = expectedStatusCodes.some(statuscode => {
+            console.log(`expected=${statuscode}`);
+            console.log(`actual=${pm.response.code}`);
+            return pm.response.code === statuscode;
+        });
+        pm.test("Status code is one of " + expectedStatusCodes.join(", "), () => { 
+            pm.expect(isOk).to.equal(true);
+        });
+    }
+
     function _verifyResponseStatusCode(expectedStatusCode) {
-        pm.test("Status code is " + expectedStatusCode, () => { pm.response.to.have.status(expectedStatusCode); });
-        return pm.response.code === expectedStatusCode;
+            pm.test("Status code is " + expectedStatusCode, () => { pm.response.to.have.status(expectedStatusCode); });
+            return pm.response.code === expectedStatusCode;
     }
 
     function _verifyResponseContentType(expectedContentType) {
