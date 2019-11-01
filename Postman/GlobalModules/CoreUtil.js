@@ -39,6 +39,8 @@ function CoreUtil() {
     _module.isResponse204 = () => { return _verifyResponseStatusCode(204); };
     _module.isResponse400 = () => { return _verifyResponseStatusCode(400); };
     _module.isResponse404 = () => { return _verifyResponseStatusCode(404); };
+    _module.isResponse500 = () => { return _verifyResponseStatusCode(500); };
+    _module.isResponse503 = () => { return _verifyResponseStatusCode(503); };
     _module.isResponse = (expectedCode) => { return _verifyResponseStatusCode(expectedCode); };
     _module.isResponseCodeAnyOf = (...expectedCodes) => { return _verifyResponseStatusCodesIsAnyOf(...expectedCodes); };
 
