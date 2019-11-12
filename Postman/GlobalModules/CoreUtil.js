@@ -51,9 +51,7 @@ function CoreUtil() {
         Note:
         The parameter "expectedContentType" is optional, and can usually be ommitted. It 
         specifies the expected content-type to look for in the header, and will default
-        to "application/json; charset=utf-8", which is what our API's will return. However,
-        the Cosmos DB API will only return "application/json", and so we need to be able
-        to override the default expected value.
+        to "application/json; charset=utf-8".
     */
     _module.isResponseJson = (expectedContentType) => {
         expectedContentType = expectedContentType || "application/json; charset=utf-8";
@@ -69,6 +67,19 @@ function CoreUtil() {
             }
         }
         return false;
+    };
+
+    /*
+        Adds a test that verifies that the content-type header is correct, and returns 
+        the result of the test as a boolean.
+        Note:
+        The parameter "expectedContentType" is optional, and can usually be ommitted. It 
+        specifies the expected content-type to look for in the header, and will default
+        to "text/plain; charset=utf-8".
+    */
+    _module.isResponsePlainText = (expectedContentType) => {
+        expectedContentType = expectedContentType || "text/plain; charset=utf-8";
+        return (_verifyResponseContentType(expectedContentType));
     };
 
     /*
