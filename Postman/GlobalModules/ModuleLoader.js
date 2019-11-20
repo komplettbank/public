@@ -36,6 +36,11 @@ function ModuleLoader() {
             "filename" : "DebtRegisterUtil.js",
             "variable" : "module:DebtRegisterUtil"
         },
+
+        "decisioningUtil" : {
+            "filename" : "DecisioningUtil.js",
+            "variable" : "module:DecisioningUtil"
+        },
     };
 
     let _module = {};
@@ -52,6 +57,7 @@ function ModuleLoader() {
     _module.loadCosmosDbUtil = () => { _downloadUtilAndUpdateVariable(_config.cosmosDbUtil.filename, _config.cosmosDbUtil.variable); }
     _module.loadJobAssistant = () => { _downloadUtilAndUpdateVariable(_config.jobAssistant.filename, _config.jobAssistant.variable); }
     _module.loadDebtRegisterUtil = () => { _downloadUtilAndUpdateVariable(_config.debtRegisterUtil.filename, _config.debtRegisterUtil.variable); }
+    _module.loadDecisioningUtil = () => { _downloadUtilAndUpdateVariable(_config.decisioningUtil.filename, _config.decisioningUtil.variable); }
 
     _module.loadAll = () => { 
         _module.loadCoreUtil(); 
@@ -59,6 +65,7 @@ function ModuleLoader() {
         _module.loadCosmosDbUtil(); 
         _module.loadJobAssistant(); 
         _module.loadDebtRegisterUtil(); 
+        _module.loadDecisioningUtil(); 
     }
 
     /* ==================== Private methods ================== */
