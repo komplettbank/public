@@ -21,13 +21,13 @@ function DecisioningUtil() {
 	   Common verifications 
 	*/
 
-    util.verifyMessage = (json, expectedMessage) => {
+    _module.verifyMessage = (json, expectedMessage) => {
         pm.test("Message is correct", function () {
             pm.expect(json).to.eql(expectedMessage);
         })
     };
 
-    util.verifyErrors = (errors, expectedErrors) => {
+    _module.verifyErrors = (errors, expectedErrors) => {
         pm.test("Erros are correct", function () {
             pm.expect(errors).to.eql(expectedErrors);
         })
@@ -37,7 +37,7 @@ function DecisioningUtil() {
 	   Price Decisioning services verifications
 	*/
 
-    util.verifyPriceDecisionResponseProperties = (json) => {
+    _module.verifyPriceDecisionResponseProperties = (json) => {
         pm.test("Response corresponds to contract", function () {
             pm.expect(json.decisionId).to.exist;
             pm.expect(json.correlationId).to.exist;
@@ -61,7 +61,7 @@ function DecisioningUtil() {
         });
     }
 
-    util.verifyRefinanceInfos = (refinanceInfos, expectedrefinanceInfos) => {
+    _module.verifyRefinanceInfos = (refinanceInfos, expectedrefinanceInfos) => {
         pm.test("refinanceInfos are correct", function () {
             pm.expect(refinanceInfos).to.eql(expectedrefinanceInfos);
         });
@@ -71,7 +71,7 @@ function DecisioningUtil() {
 	   Refinance Scope service verifications
 	*/
 
-    util.verifyRefinanceScopeResponseProperties = (json) => {
+    _module.verifyRefinanceScopeResponseProperties = (json) => {
         pm.test("Response corresponds to contract", function () {
             pm.expect(json.decisionId).to.exist;
             pm.expect(json.correlationId).to.exist;
@@ -87,7 +87,7 @@ function DecisioningUtil() {
         });
     }
 
-    util.verifyRefinanceScope = (json, refinanceScopeInfo, expectedLimitMin, expectedLimitMax, debts, expectedLimitation) => {
+    _module.verifyRefinanceScope = (json, refinanceScopeInfo, expectedLimitMin, expectedLimitMax, debts, expectedLimitation) => {
         pm.test("The Refinance scope is correct", function () {
             pm.expect(json.decisionId).to.not.be.null;
             pm.expect(refinanceScopeInfo.refinanceLimitMin).to.equal(expectedLimitMin);
@@ -96,7 +96,7 @@ function DecisioningUtil() {
         });
     }
 
-    util.verifyRefinancePolicies = (policies, expectedPolicy) => {
+    _module.verifyRefinancePolicies = (policies, expectedPolicy) => {
         pm.test("Policy is correct", function () {
             pm.expect(policies).to.eql(expectedPolicy);
         });
