@@ -33,6 +33,24 @@ function DecisioningUtil() {
         })
     };
 
+    _module.verifyRefinancePolicies = (policies, expectedPolicy) => {
+        pm.test("Policy is correct", function () {
+            pm.expect(policies).to.eql(expectedPolicy);
+        });
+    }
+
+    _module.verifyAction = (action, expectedAction) => {
+        pm.test("Action is correct", function () {
+            pm.expect(action).to.eql(expectedAction);
+        });
+    }
+
+    _module.verifydecisivePolicyCode = (decisivePolicyCode, expectedDecisivePolicyCode) => {
+        pm.test("DecisivePolicyCode is correct", function () {
+            pm.expect(decisivePolicyCode).to.eql(expectedDecisivePolicyCode);
+        });
+    }
+
     /*
 	   Price Decisioning services verifications
 	*/
@@ -40,9 +58,12 @@ function DecisioningUtil() {
     _module.verifyPriceDecisionResponseProperties = (json) => {
         pm.test("Response corresponds to contract", function () {
             pm.expect(json.decisionId).to.exist;
+            pm.expect(json.requestId).to.exist;
             pm.expect(json.correlationId).to.exist;
             pm.expect(json.offers).to.exist;
             pm.expect(json.refinanceInfos).to.exist;
+            pm.expect(json.action).to.exist;
+            pm.expect(json.decisivePolicyCode).to.exist;
             pm.expect(json.policies).to.exist;
             pm.expect(json).to.have.property("attributes");
             pm.expect(json.offers[0].id).to.exist;
@@ -74,8 +95,11 @@ function DecisioningUtil() {
     _module.verifyRefinanceScopeResponseProperties = (json) => {
         pm.test("Response corresponds to contract", function () {
             pm.expect(json.decisionId).to.exist;
+            pm.expect(json.requestId).to.exist;
             pm.expect(json.correlationId).to.exist;
             pm.expect(json.refinanceScopeInfo).to.exist;
+            pm.expect(json.action).to.exist;
+            pm.expect(json.decisivePolicyCode).to.exist;    
             pm.expect(json.policies).to.exist;
             pm.expect(json).to.have.property("attributes");
             pm.expect(json.refinanceScopeInfo.debtLevelLimitations).to.exist;
@@ -95,13 +119,6 @@ function DecisioningUtil() {
             _verifyRefinanceLimitations(debts, expectedLimitation);
         });
     }
-
-    _module.verifyRefinancePolicies = (policies, expectedPolicy) => {
-        pm.test("Policy is correct", function () {
-            pm.expect(policies).to.eql(expectedPolicy);
-        });
-    }
-  
 
     /* ==================== Private methods ================== */
 
