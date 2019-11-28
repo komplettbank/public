@@ -42,7 +42,7 @@ function ModuleLoader() {
             "variable" : "module:DecisioningUtil"
         },
 		
-		"contactInfoUtil" : {
+	"contactInfoUtil" : {
             "filename" : "ContactInfoUtil.js",
             "variable" : "module:ContactInfoUtil"
         },
