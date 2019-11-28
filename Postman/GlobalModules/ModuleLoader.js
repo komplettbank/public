@@ -41,6 +41,11 @@ function ModuleLoader() {
             "filename" : "DecisioningUtil.js",
             "variable" : "module:DecisioningUtil"
         },
+		
+		"contactInfoUtil" : {
+            "filename" : "ContactInfoUtil.js",
+            "variable" : "module:ContactInfoUtil"
+        },
     };
 
     let _module = {};
@@ -58,6 +63,7 @@ function ModuleLoader() {
     _module.loadJobAssistant = () => { _downloadUtilAndUpdateVariable(_config.jobAssistant.filename, _config.jobAssistant.variable); }
     _module.loadDebtRegisterUtil = () => { _downloadUtilAndUpdateVariable(_config.debtRegisterUtil.filename, _config.debtRegisterUtil.variable); }
     _module.loadDecisioningUtil = () => { _downloadUtilAndUpdateVariable(_config.decisioningUtil.filename, _config.decisioningUtil.variable); }
+	_module.loadContactInfoUtil = () => { _downloadUtilAndUpdateVariable(_config.contactInfoUtil.filename, _config.contactInfoUtil.variable); }
 
     _module.loadAll = () => { 
         _module.loadCoreUtil(); 
@@ -66,6 +72,7 @@ function ModuleLoader() {
         _module.loadJobAssistant(); 
         _module.loadDebtRegisterUtil(); 
         _module.loadDecisioningUtil(); 
+		_module.loadContactInfoUtil();
     }
 
     /* ==================== Private methods ================== */
