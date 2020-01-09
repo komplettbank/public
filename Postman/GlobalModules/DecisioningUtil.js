@@ -72,15 +72,9 @@ function DecisioningUtil() {
             pm.expect(json.score).to.exist;
             pm.expect(json.main).to.exist;
             pm.expect(json.main.gpid).to.exist;
-            pm.expect(json.main.firstNames).to.exist;
-            pm.expect(json.main.lastName).to.exist;
-            pm.expect(json.main.address).to.exist;
-            pm.expect(json.main.address.postalCode).to.exist;
-            pm.expect(json.main.address.city).to.exist;
-            pm.expect(json.main.address.addressLine1).to.exist;
-            pm.expect(json.main.address.addressLine2).to.exist;
-            pm.expect(json.main.address.addressLine3).to.exist;
-            pm.expect(json.main.address.country).to.exist;
+            pm.expect(json.main).to.have.property("firstNames");
+            pm.expect(json.main).to.have.property("lastName");
+            pm.expect(json.main).to.have.property("address");
             pm.expect(json.main.policies).to.exist;
             pm.expect(json.main.policies[0].code).to.exist;
             pm.expect(json.main.policies[0].description).to.exist;
@@ -89,8 +83,8 @@ function DecisioningUtil() {
             pm.expect(json.main.policies[0].quarantineDays).to.exist;
             pm.expect(json.main).to.have.property("attributes");
             pm.expect(json.main).to.have.property("additionalDataCollection");
-            pm.expect(json.cosigner).to.exist; 
-            pm.expect(json).to.have.property("debts");
+            pm.expect(json).to.have.property("cosigner");
+            pm.expect(json).to.have.property("debts"); 
         });
     }
 
