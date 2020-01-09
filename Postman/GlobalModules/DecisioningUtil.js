@@ -51,6 +51,61 @@ function DecisioningUtil() {
         });
     }
 
+    _module.verifyAttributes = (attributes, expectedAttributes) => {
+        pm.test("Attributes are correct", function () {
+            pm.expect(attributes).to.eql(expectedAttributes);
+        });
+    }
+
+
+    /*
+	   Credit Decisioning services verifications
+	*/
+
+    _module.verifyCreditDecisionResponseProperties = (json) => {
+        pm.test("Response corresponds to contract", function () {
+            pm.expect(json.decisionId).to.exist;
+            pm.expect(json.requestId).to.exist;
+            pm.expect(json.correlationId).to.exist;
+            pm.expect(json.action).to.exist;
+            pm.expect(json.decisivePolicyCode).to.exist;
+            pm.expect(json.score).to.exist;
+            pm.expect(json.main).to.exist;
+            pm.expect(json.main.gpid).to.exist;
+            pm.expect(json.main.firstNames).to.exist;
+            pm.expect(json.main.lastName).to.exist;
+            pm.expect(json.main.address).to.exist;
+            pm.expect(json.main.address.postalCode).to.exist;
+            pm.expect(json.main.address.city).to.exist;
+            pm.expect(json.main.address.addressLine1).to.exist;
+            pm.expect(json.main.address.addressLine2).to.exist;
+            pm.expect(json.main.address.addressLine3).to.exist;
+            pm.expect(json.main.address.country).to.exist;
+            pm.expect(json.main.policies).to.exist;
+            pm.expect(json.main.policies[0].code).to.exist;
+            pm.expect(json.main.policies[0].description).to.exist;
+            pm.expect(json.main.policies[0].priority).to.exist;
+            pm.expect(json.main.policies[0].action).to.exist;
+            pm.expect(json.main.policies[0].quarantineDays).to.exist;
+            pm.expect(json.main).to.have.property("attributes");
+            pm.expect(json.main).to.have.property("additionalDataCollection");
+            pm.expect(json.cosigner).to.exist; 
+            pm.expect(json).to.have.property("debts");
+        });
+    }
+
+    _module.verifyDebts = (debts, expectedDebts) => {
+        pm.test("Debts are correct", function () {
+            pm.expect(debts).to.eql(expectedDebts);
+        });
+    }
+
+    _module.verifyScore = (score, expectedScore) => {
+        pm.test("Score is correct", function () {
+            pm.expect(score).to.eql(expectedScore);
+        });
+    }
+
     /*
 	   Price Decisioning services verifications
 	*/
@@ -79,6 +134,10 @@ function DecisioningUtil() {
             pm.expect(json.offers[0].ppiFreeTerms).to.exist;
             pm.expect(json.offers[0].totalCost).to.exist;
             pm.expect(json.offers[0].minimumTermPayment).to.exist;
+            pm.expect(json.refinanceInfos[0].debtId).to.exist;
+            pm.expect(json.refinanceInfos[0].totalCost).to.exist;
+            pm.expect(json.refinanceInfos[0].monthlyCost).to.exist;
+            pm.expect(json.refinanceInfos[0].refinanceAmount).to.exist;
         });
     }
 
