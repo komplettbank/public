@@ -2,7 +2,7 @@
 
 This repo was created as a workaround to overcome [Postman's](https://www.postman.com/) missing support for creating javscript-functions that can be shared between testscripts.
 
-# Backgroud
+# Background
 
 If you find yourself writing the same code snippets over and over, you may look for a way to extract this code into a helper-function that can be reused in multiple test scripts, rather than repeating yourself, or copy-pasting snippets from one request to another.
 
@@ -11,6 +11,19 @@ Unfortunately, there is no built-in support for this in Postman*, so we will nee
 Tests that require more complex code, are great candidates for global modules, as they abstract away the complexities, leaving the actual tests more readable. Another argument is maintainability. Having complex code scattered across a number of requests, makes bug-fixing or implementing changes to that code a nightmare. Keeping it in a single, reusable module, means having a single point of maintenance.
 
 _*) Postman does support writing pre-request scripts and test scripts on the collection level, but these will be executed for every request in a collection, and is far from being the same as being able to call a specific helper-function on demand..._
+
+# Module Overview
+
+Module | Description
+--- | --- 
+module:CoreUtil | General utility-module, where we keep small, handy, reusable functions, not specific to a particular domain.
+module:CosmosDbUtil | Generates the details needed to authenticate requests to the CosmosDb Rest API.
+module:AzureBlobUtil | Generates the details needed to authenticate requests to the Azure Storage Services Rest API.
+module:JobAssistant | Helps check the status of long running jobs, which run asynchronously to the request that triggered it.
+module:DebtRegisterUtil | Helper functions for the Debt Register domain
+module:DecisioningUtil | Helper functions for the Decisioning domain
+module:ContactInfoUtil | Helper functions for the ContactInfo domain
+
 
 # Usage
 
