@@ -82,7 +82,7 @@ function DecisioningUtil() {
             pm.expect(json.main.policies[0].action).to.exist;
             pm.expect(json.main.policies[0].quarantineDays).to.exist;
             pm.expect(json.main).to.have.property("attributes");
-            pm.expect(json.main).to.have.property("additionalDataCollection");
+            //pm.expect(json.main).to.have.property("additionalDataCollection");
             pm.expect(json).to.have.property("cosigner");
             pm.expect(json).to.have.property("debts"); 
         });
