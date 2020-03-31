@@ -173,6 +173,45 @@ function DecisioningUtil() {
         });
     }
 
+    /*
+	   kycExternal LookUp service verifications
+	*/
+
+    _module.verifyKycExternalLookUpAppHandlingModelResponseProperties = (json) => {
+        pm.test("Response corresponds to contract", function () {
+            pm.expect(json.decisionId).to.exist;
+            pm.expect(json.requestId).to.exist;
+            pm.expect(json.correlationId).to.exist;
+            pm.expect(json.cosigner).to.exist;
+            pm.expect(json.main).to.exist
+        });
+    }
+
+    _module.verifyKycExternalLookUpBatchModelResponseProperties = (json) => {
+        pm.test("Response corresponds to contract", function () {
+            pm.expect(json.decisionId).to.exist;
+            pm.expect(json.requestId).to.exist;
+            pm.expect(json.correlationId).to.exist;
+            pm.expect(json.checkResults).to.exist
+        });
+    }
+
+    _module.verifyKycExternalLookUpDefaultModelResponseProperties = (json) => {
+        pm.test("Response corresponds to contract", function () {
+            pm.expect(json.decisionId).to.exist;
+            pm.expect(json.requestId).to.exist;
+            pm.expect(json.correlationId).to.exist;
+            pm.expect(json.checkResults).to.exist
+        });
+    }
+
+    _module.verifyCheckResults = (checkResults, expectedCheckResults) => {
+        pm.test("The Check Result is correct", function () {            
+            pm.expect(checkResults).to.eql(expectedCheckResults);
+        });
+    }
+
+    
     /* ==================== Private methods ================== */
 
 
