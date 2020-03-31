@@ -182,7 +182,7 @@ function DecisioningUtil() {
             pm.expect(json.decisionId).to.exist;
             pm.expect(json.requestId).to.exist;
             pm.expect(json.correlationId).to.exist;
-            pm.expect(json.cosigner).to.exist;
+            if (json.cosigner !== null) { pm.expect(json.cosigner).to.exist;}            
             pm.expect(json.main).to.exist
         });
     }
